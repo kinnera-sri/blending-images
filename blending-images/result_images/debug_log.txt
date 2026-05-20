@@ -1,0 +1,52 @@
+
+================ EDGE DEBUG ================
+
+Pixel Location: (126, 247)
+
+SOURCE PIXEL (logo):
+[ 76 112  71]
+
+DESTINATION PIXEL:
+[104 122 135]
+
+ALPHA VALUE:
+[0. 0. 0.]
+
+FINAL BLENDED PIXEL:
+[104 122 135]
+
+MANUAL COMPUTED BLEND:
+[104 122 135]
+
+============= ALPHA PROFILE =============
+
+x= 116 | alpha=0.000000
+x= 117 | alpha=0.000000
+x= 118 | alpha=0.000000
+x= 119 | alpha=0.000000
+x= 120 | alpha=0.000000
+x= 121 | alpha=0.000000
+x= 122 | alpha=0.000000
+x= 123 | alpha=0.000000
+x= 124 | alpha=0.000000
+x= 125 | alpha=0.000000
+x= 126 | alpha=0.000000
+x= 127 | alpha=0.000000
+x= 128 | alpha=0.000000
+x= 129 | alpha=0.003922
+x= 130 | alpha=0.019608
+x= 131 | alpha=0.050980
+x= 132 | alpha=0.101961
+x= 133 | alpha=0.184314
+x= 134 | alpha=0.262745
+x= 135 | alpha=0.305882
+x= 136 | alpha=0.313726
+
+============= COLOR DIFFERENCE =============
+
+Source - Destination:
+[-28 -10 -64]
+
+Saved debug crop visualizations.
+
+===========================================

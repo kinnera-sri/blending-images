@@ -166,13 +166,20 @@ blended = (
 blended = np.clip(blended, 0, 255).astype(np.uint8)
 
 # ============================================================
+# OPEN DEBUG LOG FILE
+# ============================================================
+
+log_path = "blending-images/result_images/debug_log.txt"
+
+log_file = open(log_path, "w")
+# ============================================================
 # DEBUG EDGE PIXEL ANALYSIS
 # ============================================================
 
-debug_x = 983
-debug_y = 165
+debug_x = 126
+debug_y = 247
 
-print("\n================ EDGE DEBUG ================\n")
+log_file.write("\n================ EDGE DEBUG ================\n\n")
 
 # ------------------------------------------------------------
 # RAW PIXELS
@@ -186,19 +193,21 @@ blend_pixel = blended[debug_y, debug_x]
 
 alpha_pixel = alpha[debug_y, debug_x]
 
-print(f"Pixel Location: ({debug_x}, {debug_y})\n")
+log_file.write(
+    f"Pixel Location: ({debug_x}, {debug_y})\n\n"
+)
 
-print("SOURCE PIXEL (logo):")
-print(src_pixel)
+log_file.write("SOURCE PIXEL (logo):\n")
+log_file.write(f"{src_pixel}\n\n")
 
-print("\nDESTINATION PIXEL:")
-print(dst_pixel)
+log_file.write("DESTINATION PIXEL:\n")
+log_file.write(f"{dst_pixel}\n\n")
 
-print("\nALPHA VALUE:")
-print(alpha_pixel)
+log_file.write("ALPHA VALUE:\n")
+log_file.write(f"{alpha_pixel}\n\n")
 
-print("\nFINAL BLENDED PIXEL:")
-print(blend_pixel)
+log_file.write("FINAL BLENDED PIXEL:\n")
+log_file.write(f"{blend_pixel}\n\n")
 
 
 # ------------------------------------------------------------
@@ -212,15 +221,17 @@ manual = (
     * dst_pixel.astype(np.float32)
 )
 
-print("\nMANUAL COMPUTED BLEND:")
-print(manual.astype(np.uint8))
+log_file.write("MANUAL COMPUTED BLEND:\n")
+log_file.write(f"{manual.astype(np.uint8)}\n\n")
 
 
 # ------------------------------------------------------------
-# ALPHA PROFILE AROUND EDGE
+# ALPHA PROFILE
 # ------------------------------------------------------------
 
-print("\n============= ALPHA PROFILE =============\n")
+log_file.write(
+    "============= ALPHA PROFILE =============\n\n"
+)
 
 for offset in range(-10, 11):
 
@@ -228,11 +239,32 @@ for offset in range(-10, 11):
 
     a = alpha[debug_y, xx][0]
 
-    print(f"x={xx:4d} | alpha={a:.4f}")
+    log_file.write(
+        f"x={xx:4d} | alpha={a:.6f}\n"
+    )
 
 
 # ------------------------------------------------------------
-# VISUALIZE EDGE REGION
+# SOURCE / DEST DIFFERENCE
+# ------------------------------------------------------------
+
+log_file.write(
+    "\n============= COLOR DIFFERENCE =============\n\n"
+)
+
+difference = (
+    src_pixel.astype(np.int32)
+    -
+    dst_pixel.astype(np.int32)
+)
+
+log_file.write(
+    f"Source - Destination:\n{difference}\n\n"
+)
+
+
+# ------------------------------------------------------------
+# VISUALIZE LOCAL REGION
 # ------------------------------------------------------------
 
 region_size = 60
@@ -243,16 +275,13 @@ x2 = min(debug_x + region_size, dst.shape[1])
 y1 = max(debug_y - region_size, 0)
 y2 = min(debug_y + region_size, dst.shape[0])
 
-src_crop = warped_src[y1:y2, x1:x2]
+src_crop = warped_src[y1:y2, x1:x2].copy()
 
-dst_crop = dst[y1:y2, x1:x2]
+dst_crop = dst[y1:y2, x1:x2].copy()
 
-mask_crop = soft_mask[y1:y2, x1:x2]
+mask_crop = soft_mask[y1:y2, x1:x2].copy()
 
-blend_crop = blended[y1:y2, x1:x2]
-
-
-# mark debug pixel
+blend_crop = blended[y1:y2, x1:x2].copy()
 
 cx = debug_x - x1
 cy = debug_y - y1
@@ -268,30 +297,32 @@ for img in [src_crop, dst_crop, blend_crop]:
     )
 
 cv2.imwrite(
-    "/blending-images/result_images/debug_src_crop.png",
+    "blending-images/result_images/debug_src_crop.png",
     src_crop
 )
 
 cv2.imwrite(
-    "/result_images/debug_dst_crop.png",
+    "blending-images/result_images/debug_dst_crop.png",
     dst_crop
 )
 
 cv2.imwrite(
-    "/result_images/debug_mask_crop.png",
+    "blending-images/result_images/debug_mask_crop.png",
     mask_crop
 )
 
 cv2.imwrite(
-    "/result_images/debug_blend_crop.png",
+    "blending-images/result_images/debug_blend_crop.png",
     blend_crop
 )
 
-print("\nSaved:")
-print(" - debug_src_crop.png")
-print(" - debug_dst_crop.png")
-print(" - debug_mask_crop.png")
-print(" - debug_blend_crop.png")
+log_file.write(
+    "Saved debug crop visualizations.\n"
+)
+
+log_file.write(
+    "\n===========================================\n"
+)
 
 
 # ============================================================
@@ -304,9 +335,10 @@ cv2.imwrite("blending-images/result_images/soft_mask_feather_office_pepsi.png", 
 cv2.imwrite("blending-images/result_images/feather_blended_office_pepsi.png", blended)
 
 print("Done.")
+log_file.close()
 
 # cv2.imshow("Final Blend", blended)
 # cv2.waitKey(0)
 # cv2.destroyAllWindows()
 
-# (983, 165): edge pixel, need to visualize every step and values to see why the ghost effect happens at the edge of the logo
+# (x, y): edge pixel, need to visualize every step and values to see why the ghost effect happens at the edge of the logo
