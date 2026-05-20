@@ -138,7 +138,7 @@ warped_mask = cv2.warpPerspective(
 # CREATE FEATHERED MASK
 # ============================================================
 
-feather_radius = 5
+feather_radius = 27
 
 soft_mask = cv2.GaussianBlur(
     warped_mask,
@@ -165,134 +165,6 @@ blended = (
 
 blended = np.clip(blended, 0, 255).astype(np.uint8)
 
-# ============================================================
-# DEBUG EDGE PIXEL ANALYSIS
-# ============================================================
-
-debug_x = 983
-debug_y = 165
-
-print("\n================ EDGE DEBUG ================\n")
-
-# ------------------------------------------------------------
-# RAW PIXELS
-# ------------------------------------------------------------
-
-src_pixel = warped_src[debug_y, debug_x]
-
-dst_pixel = dst[debug_y, debug_x]
-
-blend_pixel = blended[debug_y, debug_x]
-
-alpha_pixel = alpha[debug_y, debug_x]
-
-print(f"Pixel Location: ({debug_x}, {debug_y})\n")
-
-print("SOURCE PIXEL (logo):")
-print(src_pixel)
-
-print("\nDESTINATION PIXEL:")
-print(dst_pixel)
-
-print("\nALPHA VALUE:")
-print(alpha_pixel)
-
-print("\nFINAL BLENDED PIXEL:")
-print(blend_pixel)
-
-
-# ------------------------------------------------------------
-# MANUAL BLEND VERIFICATION
-# ------------------------------------------------------------
-
-manual = (
-    alpha_pixel * src_pixel.astype(np.float32)
-    +
-    (1.0 - alpha_pixel)
-    * dst_pixel.astype(np.float32)
-)
-
-print("\nMANUAL COMPUTED BLEND:")
-print(manual.astype(np.uint8))
-
-
-# ------------------------------------------------------------
-# ALPHA PROFILE AROUND EDGE
-# ------------------------------------------------------------
-
-print("\n============= ALPHA PROFILE =============\n")
-
-for offset in range(-10, 11):
-
-    xx = debug_x + offset
-
-    a = alpha[debug_y, xx][0]
-
-    print(f"x={xx:4d} | alpha={a:.4f}")
-
-
-# ------------------------------------------------------------
-# VISUALIZE EDGE REGION
-# ------------------------------------------------------------
-
-region_size = 60
-
-x1 = max(debug_x - region_size, 0)
-x2 = min(debug_x + region_size, dst.shape[1])
-
-y1 = max(debug_y - region_size, 0)
-y2 = min(debug_y + region_size, dst.shape[0])
-
-src_crop = warped_src[y1:y2, x1:x2]
-
-dst_crop = dst[y1:y2, x1:x2]
-
-mask_crop = soft_mask[y1:y2, x1:x2]
-
-blend_crop = blended[y1:y2, x1:x2]
-
-
-# mark debug pixel
-
-cx = debug_x - x1
-cy = debug_y - y1
-
-for img in [src_crop, dst_crop, blend_crop]:
-
-    cv2.circle(
-        img,
-        (cx, cy),
-        4,
-        (0,0,255),
-        -1
-    )
-
-cv2.imwrite(
-    "/blending-images/result_images/debug_src_crop.png",
-    src_crop
-)
-
-cv2.imwrite(
-    "/result_images/debug_dst_crop.png",
-    dst_crop
-)
-
-cv2.imwrite(
-    "/result_images/debug_mask_crop.png",
-    mask_crop
-)
-
-cv2.imwrite(
-    "/result_images/debug_blend_crop.png",
-    blend_crop
-)
-
-print("\nSaved:")
-print(" - debug_src_crop.png")
-print(" - debug_dst_crop.png")
-print(" - debug_mask_crop.png")
-print(" - debug_blend_crop.png")
-
 
 # ============================================================
 # SAVE RESULTS
@@ -308,5 +180,3 @@ print("Done.")
 # cv2.imshow("Final Blend", blended)
 # cv2.waitKey(0)
 # cv2.destroyAllWindows()
-
-# (983, 165): edge pixel, need to visualize every step and values to see why the ghost effect happens at the edge of the logo
