@@ -4,7 +4,7 @@
 Pixel Location: (126, 247)
 
 SOURCE PIXEL (logo):
-[ 76 112  71]
+[0 0 0]
 
 DESTINATION PIXEL:
 [104 122 135]
@@ -45,7 +45,7 @@ x= 136 | alpha=0.000000
 ============= COLOR DIFFERENCE =============
 
 Source - Destination:
-[-28 -10 -64]
+[-104 -122 -135]
 
 Saved debug crop visualizations.
 
