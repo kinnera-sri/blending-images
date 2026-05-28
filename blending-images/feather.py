@@ -7,7 +7,7 @@ import numpy as np
 # ============================================================
 
 src = cv2.imread(
-    "blending-images/main_images/lego.png",
+    "blending-images/main_images/pepsi_logo.png",
     cv2.IMREAD_UNCHANGED
 )
 
@@ -297,22 +297,22 @@ for img in [src_crop, dst_crop, blend_crop]:
     )
 
 cv2.imwrite(
-    "blending-images/result_images/debug_src_crop_office_lego_p2.png",
+    "blending-images/result_images/debug_src_crop_office_pepsi_p2.png",
     src_crop
 )
 
 cv2.imwrite(
-    "blending-images/result_images/debug_dst_crop_office_lego_p2.png",
+    "blending-images/result_images/debug_dst_crop_office_pepsi_p2.png",
     dst_crop
 )
 
 cv2.imwrite(
-    "blending-images/result_images/debug_mask_crop_office_lego_p2.png",
+    "blending-images/result_images/debug_mask_crop_office_pepsi_p2.png",
     mask_crop
 )
 
 cv2.imwrite(
-    "blending-images/result_images/debug_blend_crop_office_lego_p2.png",
+    "blending-images/result_images/debug_blend_crop_office_pepsi_p2.png",
     blend_crop
 )
 
