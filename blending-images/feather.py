@@ -7,7 +7,7 @@ import numpy as np
 # ============================================================
 
 src = cv2.imread(
-    "blending-images/main_images/pepsi_logo.png",
+    "blending-images/main_images/lego.png",
     cv2.IMREAD_UNCHANGED
 )
 
@@ -297,22 +297,22 @@ for img in [src_crop, dst_crop, blend_crop]:
     )
 
 cv2.imwrite(
-    "blending-images/result_images/debug_src_crop.png",
+    "blending-images/result_images/debug_src_crop_office_lego_p2.png",
     src_crop
 )
 
 cv2.imwrite(
-    "blending-images/result_images/debug_dst_crop.png",
+    "blending-images/result_images/debug_dst_crop_office_lego_p2.png",
     dst_crop
 )
 
 cv2.imwrite(
-    "blending-images/result_images/debug_mask_crop.png",
+    "blending-images/result_images/debug_mask_crop_office_lego_p2.png",
     mask_crop
 )
 
 cv2.imwrite(
-    "blending-images/result_images/debug_blend_crop.png",
+    "blending-images/result_images/debug_blend_crop_office_lego_p2.png",
     blend_crop
 )
 
@@ -329,10 +329,10 @@ log_file.write(
 # SAVE RESULTS
 # ============================================================
 
-cv2.imwrite("blending-images/result_images/warped_logo_feather_office_pepsi.png", warped_src)
-cv2.imwrite("blending-images/result_images/warped_mask_feather_office_pepsi.png", warped_mask)
-cv2.imwrite("blending-images/result_images/soft_mask_feather_office_pepsi.png", soft_mask)
-cv2.imwrite("blending-images/result_images/feather_blended_office_pepsi.png", blended)
+cv2.imwrite("blending-images/result_images/warped_logo_feather_office_lego_p2.png", warped_src)
+cv2.imwrite("blending-images/result_images/warped_mask_feather_office_lego_p2.png", warped_mask)
+cv2.imwrite("blending-images/result_images/soft_mask_feather_office_lego_p2.png", soft_mask)
+cv2.imwrite("blending-images/result_images/feather_blended_office_lego_p2.png", blended)
 
 print("Done.")
 log_file.close()
