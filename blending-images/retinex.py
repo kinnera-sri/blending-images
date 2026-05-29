@@ -6,14 +6,19 @@ import numpy as np
 # CONFIG
 # ============================================================
 
-SOURCE_PATH = "lego.png"
-DEST_PATH = "b99.png"
+SOURCE_PATH = "blending-images/main_images/lego.png"
+# SOURCE_PATH = "blending-images/main_images/pepsi_logo.png"
 
-OUTPUT_NAME = "retinex_blended.png"
+DEST_PATH = "blending-images/main_images/b99.png"
+# DEST_PATH = "blending-images/main_images/b99_2.png"
+# DEST_PATH = "blending-images/main_images/office.png"
 
-BLUR_SIGMA = 41
 
-FEATHER_RADIUS = 31
+OUTPUT_NAME = "blending-images/result_images/retinex_b99_lego_p1.png"
+
+BLUR_SIGMA = 35
+
+FEATHER_RADIUS = 5
 
 
 # ============================================================
@@ -246,27 +251,27 @@ alpha_vis = (alpha * 255).astype(np.uint8)
 # ============================================================
 
 cv2.imwrite(
-    "01_warped_logo.png",
+    "blending-images/result_images/retinex_warped_logo_b99_lego_p1.png",
     warped_logo
 )
 
 cv2.imwrite(
-    "02_warped_mask.png",
+    "blending-images/result_images/retinex_warped_mask_b99_lego_p1.png",
     warped_mask
 )
 
 cv2.imwrite(
-    "03_soft_mask.png",
+    "blending-images/result_images/retinex_soft_mask_b99_lego_p1.png",
     alpha_vis
 )
 
 cv2.imwrite(
-    "04_logo_illumination.png",
+    "blending-images/result_images/retinex_logo_illumination_b99_lego_p1.png",
     illum_logo_vis
 )
 
 cv2.imwrite(
-    "05_logo_reflectance.png",
+    "blending-images/result_images/retinex_logo_reflectance_b99_lego_p1.png",
     reflect_logo_vis
 )
 
